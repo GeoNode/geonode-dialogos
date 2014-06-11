@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.template import Template, Context
 from django.test import TestCase
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 
 from dialogos.forms import CommentForm
@@ -58,8 +58,8 @@ class TestCaseMixin(object):
 class CommentTests(TestCaseMixin, TestCase):
     
     def setUp(self):
-        self.user = User.objects.create_user("gimli", "myaxe@dwarf.org", "gloin")
-        self.user2 = User.objects.create_user("aragorn", "theking@gondor.gov", "strider")
+        self.user = get_user_model().objects.create_user("gimli", "myaxe@dwarf.org", "gloin")
+        self.user2 = get_user_model().objects.create_user("aragorn", "theking@gondor.gov", "strider")
     
     def assert_renders(self, tmpl, context, value):
         tmpl = Template(tmpl)
@@ -73,7 +73,7 @@ class CommentTests(TestCaseMixin, TestCase):
         )
     
     def test_post_comment(self):
-        g = User.objects.create(username="Gandalf")
+        g = get_user_model().objects.create(username="Gandalf")
         
         response = self.post_comment(g, data={
             "name": "Frodo Baggins",
@@ -103,7 +103,7 @@ class CommentTests(TestCaseMixin, TestCase):
             self.assertEqual(c.author, self.user)
     
     def test_delete_comment(self):
-        g = User.objects.create(username="Boromir")
+        g = get_user_model().objects.create(username="Boromir")
         with self.login("gimli", "gloin"):
             response = self.post_comment(g, data={
                 "comment": "Wow, you're a jerk.",
@@ -125,7 +125,7 @@ class CommentTests(TestCaseMixin, TestCase):
             self.assertEqual(Comment.objects.count(), 0)
     
     def test_ttag_comment_count(self):
-        g = User.objects.create(username="Sauron")
+        g = get_user_model().objects.create(username="Sauron")
         self.post_comment(g, data={
             "name": "Gandalf",
             "comment": "You can't win",
@@ -142,7 +142,7 @@ class CommentTests(TestCaseMixin, TestCase):
         )
     
     def test_ttag_comments(self):
-        g = User.objects.create(username="Sauron")
+        g = get_user_model().objects.create(username="Sauron")
         self.post_comment(g, data={
             "name": "Gandalf",
             "comment": "You can't win",
@@ -161,7 +161,7 @@ class CommentTests(TestCaseMixin, TestCase):
         self.assertEqual(list(c["cs"]), list(Comment.objects.all()))
     
     def test_ttag_comment_form(self):
-        g = User.objects.create(username="Sauron")
+        g = get_user_model().objects.create(username="Sauron")
         c = Context({"o": g})
         self.assert_renders(
             "{% load dialogos_tags %}{% comment_form o as comment_form %}",
@@ -180,7 +180,7 @@ class CommentTests(TestCaseMixin, TestCase):
             self.assertTrue(isinstance(c["comment_form"], CommentForm))
     
     def test_ttag_comment_target(self):
-        g = User.objects.create(username="legolas")
+        g = get_user_model().objects.create(username="legolas")
         self.assert_renders(
             "{% load dialogos_tags %}{% comment_target o %}",
             Context({"o": g}),
