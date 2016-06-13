@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('object_id', models.IntegerField()),
                 ('comment', models.TextField()),
                 ('submit_date', models.DateTimeField(default=datetime.datetime.now)),
-                ('ip_address', models.IPAddressField(null=True)),
+                ('ip_address', models.GenericIPAddressField(null=True)),
                 ('public', models.BooleanField(default=True)),
                 ('author', models.ForeignKey(related_name='comments', to=settings.AUTH_USER_MODEL, null=True)),
                 ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
