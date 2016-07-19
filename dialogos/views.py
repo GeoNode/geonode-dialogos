@@ -47,7 +47,7 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
                 "html": render_to_string("dialogos/_comment.html", {
                     "comment": comment
                 }, context_instance=RequestContext(request))
-            }), mimetype="application/json")
+            }), content_type="application/json")
     else:
         if request.is_ajax():
             return HttpResponse(json.dumps({
@@ -57,7 +57,7 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
                     "form": form,
                     "obj": obj
                 }, context_instance=RequestContext(request))
-            }), mimetype="application/json")
+            }), content_type="application/json")
     redirect_to = request.POST.get("next")
     # light security check -- make sure redirect_to isn't garbage.
     if not redirect_to or " " in redirect_to or redirect_to.startswith("http"):
@@ -77,13 +77,13 @@ def edit_comment(request, comment_id, form_class=CommentForm):
             return HttpResponse(json.dumps({
                 "status": "OK",
                 "comment": dehydrate_comment(comment)
-            }), mimetype="application/json")
+            }), content_type="application/json")
     else:
         if request.is_ajax():
             return HttpResponse(json.dumps({
                 "status": "ERROR",
                 "errors": form.errors
-            }), mimetype="application/json")
+            }), content_type="application/json")
     redirect_to = request.POST.get("next")
     # light security check -- make sure redirect_to isn't garbage.
     if not redirect_to or " " in redirect_to or redirect_to.startswith("http"):
