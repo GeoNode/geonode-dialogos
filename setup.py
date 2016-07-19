@@ -3,13 +3,13 @@ from distutils.core import setup
 
 setup(
     name = "dialogos",
-    version = "0.4",
+    version = "0.6",
     author = "Eldarion",
     author_email = "development@eldarion.com",
     description = "a flaggable comments app",
     long_description = open("README.rst").read(),
     license = "BSD",
-    url = "http://github.com/eldarion/dialogos",
+    url = "https://github.com/GeoNode/geonode-dialogos",
     packages = [
         "dialogos",
         "dialogos.templatetags",
