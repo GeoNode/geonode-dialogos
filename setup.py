@@ -2,10 +2,12 @@ from distutils.core import setup
 
 
 setup(
-    name = "dialogos",
+    name = "geonode-dialogos",
     version = "0.6",
     author = "Eldarion",
     author_email = "development@eldarion.com",
+    maintaner = "Geonode Developers",
+    maintainer_email = "geonode-devel@lists.osgeo.org",
     description = "a flaggable comments app",
     long_description = open("README.rst").read(),
     license = "BSD",
