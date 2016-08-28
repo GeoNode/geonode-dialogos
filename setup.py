@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name = "geonode-dialogos",
-    version = "0.6",
+    version = "0.7",
     author = "Eldarion",
     author_email = "development@eldarion.com",
     maintaner = "Geonode Developers",
@@ -15,6 +15,7 @@ setup(
     packages = [
         "dialogos",
         "dialogos.templatetags",
+        "dialogos.migrations",
     ],
     classifiers = [
         "Development Status :: 3 - Alpha",
