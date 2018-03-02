@@ -1,13 +1,9 @@
-import django
 from datetime import datetime
 
 from django.db import models
 
 from django.conf import settings
-if django.VERSION < (1, 9):
-    from django.contrib.contenttypes.generic import GenericForeignKey
-else:
-    from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 

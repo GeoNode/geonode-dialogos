@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name = "geonode-dialogos",
-    version = "0.8",
+    version = "0.9",
     author = "Eldarion",
     author_email = "development@eldarion.com",
     maintaner = "Geonode Developers",
