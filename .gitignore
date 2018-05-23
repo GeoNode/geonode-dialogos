@@ -1,4 +1,5 @@
 *.py[co]
+*.bak
 
 /build/lib/dialogos/__init__.py
 /build/lib/dialogos/admin.py
