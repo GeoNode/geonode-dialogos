@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from django.views.decorators.http import require_POST
 from django.shortcuts import get_object_or_404, redirect
-from django.template.loader import render
+from django.template.loader import render_to_string
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
@@ -43,19 +43,19 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
             return HttpResponse(json.dumps({
                 "status": "OK",
                 "comment": dehydrate_comment(comment),
-                "html": render(request, "dialogos/_comment.html", {
+                "html": render_to_string("dialogos/_comment.html", {
                     "comment": comment
-                })
+                }, request=request)
             }), content_type="application/json")
     else:
         if request.is_ajax():
             return HttpResponse(json.dumps({
                 "status": "ERROR",
                 "errors": form.errors,
-                "html": render_to_string(request, "dialogos/_form.html", {
+                "html": render_to_string("dialogos/_form.html", {
                     "form": form,
                     "obj": obj
-                })
+                }, request=request)
             }), content_type="application/json")
     redirect_to = request.POST.get("next")
     # light security check -- make sure redirect_to isn't garbage.
