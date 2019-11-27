@@ -12,7 +12,7 @@ class CommentForm(forms.ModelForm):
         fields = [
             "name", "email", "website", "comment"
         ]
-    
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
         self.obj = kwargs.pop("obj")

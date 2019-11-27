@@ -11,6 +11,7 @@ from dialogos.models import Comment
 
 
 class login(object):
+    
     def __init__(self, testcase, user, password):
         self.testcase = testcase
         success = testcase.client.login(username=user, password=password)
@@ -27,6 +28,7 @@ class login(object):
 
 
 class TestCaseMixin(object):
+
     def get(self, url_name, *args, **kwargs):
         data = kwargs.pop("data", {})
         return self.client.get(reverse(url_name, args=args, kwargs=kwargs), data)
