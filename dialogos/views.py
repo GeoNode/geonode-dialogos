@@ -31,6 +31,12 @@ def dehydrate_comment(comment):
     }
 
 
+def obj_url_or_root(obj):
+    # Helper function return the root URL in case an object
+    # doesn't have the `get_absolute_url` function defined.
+    return obj if hasattr(obj, 'get_absolute_url') else '/'
+
+
 @require_POST
 def post_comment(request, content_type_id, object_id, form_class=CommentForm):
     content_type = get_object_or_404(ContentType, pk=content_type_id)
@@ -60,7 +66,7 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
     redirect_to = request.POST.get("next")
     # light security check -- make sure redirect_to isn't garbage.
     if not redirect_to or " " in redirect_to or redirect_to.startswith("http"):
-        redirect_to = obj
+        redirect_to = obj_url_or_root(obj)
     return redirect(redirect_to)
 
 
@@ -86,7 +92,7 @@ def edit_comment(request, comment_id, form_class=CommentForm):
     redirect_to = request.POST.get("next")
     # light security check -- make sure redirect_to isn't garbage.
     if not redirect_to or " " in redirect_to or redirect_to.startswith("http"):
-        redirect_to = comment.content_object
+        redirect_to = obj_url_or_root(comment.content_object)
     return redirect(redirect_to)
 
 
@@ -102,4 +108,5 @@ def delete_comment(request, comment_id):
     else:
         if request.is_ajax():
             return HttpResponse(json.dumps({"status": "ERROR", "errors": "You do not have permission to delete this comment."}))
-    return redirect(obj)
+    redirect_to = obj_url_or_root(obj)
+    return redirect(redirect_to)
