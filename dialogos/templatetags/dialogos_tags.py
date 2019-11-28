@@ -1,5 +1,5 @@
 from django import template
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from django.contrib.contenttypes.models import ContentType
 
@@ -62,7 +62,7 @@ class CommentCountNode(BaseCommentNode):
         if self.varname is not None:
             context[self.varname] = comments
             return ""
-        return unicode(comments)
+        return str(comments)
 
 
 class CommentsNode(BaseCommentNode):
