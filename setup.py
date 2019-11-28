@@ -1,8 +1,11 @@
-from distutils.core import setup
+#!/usr/bin/env python
+
+from setuptools import setup
+
 
 setup(
     name="geonode-dialogos",
-    version="1.2",
+    version="3.0",
     author="Eldarion",
     author_email="development@eldarion.com",
     maintaner="Geonode Developers",
@@ -22,7 +25,7 @@ setup(
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
-        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
         "Framework :: Django",
     ]
 )
