@@ -10,14 +10,15 @@ class Comment(models.Model):
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, 
         null=True,
-        related_name="comments"
+        related_name="comments",
+        on_delete=models.CASCADE
     )
 
     name = models.CharField(max_length=100)
     email = models.CharField(max_length=255, blank=True)
     website = models.CharField(max_length=255, blank=True)
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.IntegerField()
     content_object = GenericForeignKey()
 

@@ -45,8 +45,9 @@ class Migration(migrations.Migration):
                 ('submit_date', models.DateTimeField(default=datetime.datetime.now)),
                 ('ip_address', models.GenericIPAddressField(null=True)),
                 ('public', models.BooleanField(default=True)),
-                ('author', models.ForeignKey(related_name='comments', to=settings.AUTH_USER_MODEL, null=True)),
-                ('content_type', models.ForeignKey(to='contenttypes.ContentType')),
+                ('author', models.ForeignKey(on_delete=models.CASCADE, related_name='comments', to=settings.AUTH_USER_MODEL, null=True)),
+                ('content_type', models.ForeignKey(
+                    to='contenttypes.ContentType', on_delete=models.CASCADE)),
             ],
         ),
     ]
