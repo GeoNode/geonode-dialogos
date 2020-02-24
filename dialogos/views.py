@@ -41,7 +41,8 @@ def obj_url_or_root(obj):
 def post_comment(request, content_type_id, object_id, form_class=CommentForm):
     content_type = get_object_or_404(ContentType, pk=content_type_id)
     obj = get_object_or_404(content_type.model_class(), pk=object_id)
-    form = form_class(request.POST, request=request, obj=obj, user=request.user)
+    form = form_class(
+        request.POST, request=request, obj=obj, user=request.user)
     if form.is_valid():
         comment = form.save()
         commented.send(sender=post_comment, comment=comment, request=request)
@@ -74,10 +75,13 @@ def post_comment(request, content_type_id, object_id, form_class=CommentForm):
 @require_POST
 def edit_comment(request, comment_id, form_class=CommentForm):
     comment = get_object_or_404(Comment, pk=comment_id)
-    form = form_class(request.POST, instance=comment, request=request, obj=comment.content_object, user=request.user)
+    form = form_class(
+        request.POST, instance=comment, request=request,
+        obj=comment.content_object, user=request.user)
     if form.is_valid():
         comment = form.save()
-        comment_updated.send(sender=edit_comment, comment=comment, request=request)
+        comment_updated.send(
+            sender=edit_comment, comment=comment, request=request)
         if request.is_ajax():
             return HttpResponse(json.dumps({
                 "status": "OK",
@@ -107,6 +111,9 @@ def delete_comment(request, comment_id):
             return HttpResponse(json.dumps({"status": "OK"}))
     else:
         if request.is_ajax():
-            return HttpResponse(json.dumps({"status": "ERROR", "errors": "You do not have permission to delete this comment."}))
+            return HttpResponse(json.dumps(
+                {"status": "ERROR",
+                 "errors": "You do not have permission to delete this comment."
+                 }))
     redirect_to = obj_url_or_root(obj)
     return redirect(redirect_to)
